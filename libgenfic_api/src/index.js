@@ -2,10 +2,9 @@ const PORT =  8000
 const request = require('request');
 const cheerio = require('cheerio');
 const express = require('express');
-const functions = require('firebase-functions')
+//const functions = require('firebase-functions')
 
 
-//https://www.youtube.com/watch?v=LW26kpjGl2c&ab_channel=WebDevWithArtisan
 
 const app = express()
 
@@ -141,8 +140,9 @@ function getSearch(search, page, cyteriaType) {
 function getDetails(url){
     obj = new Object();
     obj.status = 'not found'
-    obj.book = []
+    
     let urlModified = "http://library.lol/fiction/"+url
+    let url1 = url
     return new Promise((resolve, reject)=>{
     request(urlModified, (error,response, html) => {
     if (!error && response.statusCode== 200) {
@@ -162,14 +162,16 @@ function getDetails(url){
             const img = 'http://libgen.rs/'+$('html body table tbody tr td#info div').find('img').attr('src')
             const url = $('body > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(18) > td:nth-child(2) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)').attr('href')
         if (title != null){
-            obj.book.push({
+            obj.book={
                     "title" : title,
                     "author" : author,
                     "description": details,
                     "image": img,
+                    "id": url1,
+                   
                     "download" : download,
                     
-                })
+                };
             obj.status = "ok"
     
             resolve(obj)
@@ -217,4 +219,4 @@ function getDetscription(url){
 });
 
 }
-exports.app = functions.https.onRequest(app);
+//exports.app = functions.https.onRequest(app);
