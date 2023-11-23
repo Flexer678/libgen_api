@@ -20,5 +20,3 @@ libgen fic api = {
 the modules required= [cheerio, express,request, require]
 
 they both run at different ports
-libgen api = https://us-central1-readify-21f57.cloudfunctions.net/app2/
-libgenfic api = https://us-central1-readify-21f57.cloudfunctions.net/app/
